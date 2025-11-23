@@ -3,9 +3,13 @@
 // Rectangle hérite de Forme
 
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Rectangle extends Forme {
     private static int compteur = 0;
+    private static final int MAX_INSTANCES = 10;
+    private static final List<Rectangle> instances = new ArrayList<>();
 
     protected double longueur;
     protected double largeur;
@@ -17,6 +21,13 @@ public class Rectangle extends Forme {
         // n'incrémente le compteur Rectangle que si l'instance est exactement Rectangle
         if (this.getClass() == Rectangle.class) {
             incrementerCompteur();
+            // essayer d'ajouter à la liste statique
+            if (!addRectangle(this)) {
+                // rollback compteurs
+                decrementerCompteur();
+                detruireFormeGlobale();
+                throw new IllegalStateException("Liste Rectangle pleine (max=" + MAX_INSTANCES + ")");
+            }
         }
         setLongueur(longueur);
         setLargeur(largeur);
@@ -25,6 +36,17 @@ public class Rectangle extends Forme {
                            ", total formes : " + Forme.getCompteurFormes());
         }
     }
+
+    // gestion des instances statiques (nommées spécifiquement pour éviter masquage)
+    public static boolean isFullRect() { return instances.size() >= MAX_INSTANCES; }
+    public static boolean addRectangle(Rectangle r) {
+        if (instances.size() >= MAX_INSTANCES) return false;
+        instances.add(r);
+        return true;
+    }
+    public static Rectangle removeRectangleAt(int idx) { return instances.remove(idx); }
+    public static List<Rectangle> getRectangles() { return instances; }
+    public static int getRectangleCount() { return instances.size(); }
 
     public Rectangle() {
         this(1.0, 1.0);

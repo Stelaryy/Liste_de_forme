@@ -1,9 +1,14 @@
 // Auteur : Ahmed Boukra Bettayeb (adaptation)
 
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ellipse extends Forme {
     private static int compteur = 0;
+
+    private static final int MAX_INSTANCES = 10;
+    private static final List<ellipse> instances = new ArrayList<>();
 
     protected double grandAxe;
     protected double petitAxe;
@@ -18,6 +23,11 @@ public class ellipse extends Forme {
         // n'incrémente le compteur Ellipse que si l'instance est exactement ellipse
         if (this.getClass() == ellipse.class) {
             incrementerCompteur();
+            if (!addEllipse(this)) {
+                decrementerCompteur();
+                detruireFormeGlobale();
+                throw new IllegalStateException("Liste Ellipse pleine (max=" + MAX_INSTANCES + ")");
+            }
         }
         calculerSurface();
         calculerPerimetre();
@@ -32,6 +42,13 @@ public class ellipse extends Forme {
     public static void incrementerCompteur() { compteur++; }
     public static void decrementerCompteur() { if (compteur>0) compteur--; }
     public static int getCompteurEllipse() { return compteur; }
+
+    // gestion instances
+    public static boolean isFullEllipse() { return instances.size() >= MAX_INSTANCES; }
+    public static boolean addEllipse(ellipse e) { if (instances.size()>=MAX_INSTANCES) return false; instances.add(e); return true; }
+    public static ellipse removeEllipseAt(int idx) { return instances.remove(idx); }
+    public static List<ellipse> getEllipses() { return instances; }
+    public static int getEllipseCount() { return instances.size(); }
 
     protected void calculerSurface() { surface = Math.PI * grandAxe * petitAxe; }
 

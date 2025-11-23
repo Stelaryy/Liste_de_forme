@@ -1,9 +1,14 @@
 // Auteur : Ahmed Boukra Bettayeb (adaptation)
 
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TriangleQuelconque extends Forme {
     private static int compteur = 0;
+
+    private static final int MAX_INSTANCES = 10;
+    private static final List<TriangleQuelconque> instances = new ArrayList<>();
 
     private double a, b, c;
     private double surface, perimetre;
@@ -13,6 +18,11 @@ public class TriangleQuelconque extends Forme {
         if (!estValide(a,b,c)) throw new IllegalArgumentException("Cotes invalides");
         this.a = a; this.b = b; this.c = c;
         incrementerCompteur();
+        if (!addTriangle(this)) {
+            decrementerCompteur();
+            detruireFormeGlobale();
+            throw new IllegalStateException("Liste Triangle pleine (max=" + MAX_INSTANCES + ")");
+        }
         calculer();
         System.out.println("Creation d'un Triangle. Compteur Triangle : " + compteur +
                            ", total formes : " + Forme.getCompteurFormes());
@@ -22,6 +32,11 @@ public class TriangleQuelconque extends Forme {
         super();
         saisirDimensions();
         incrementerCompteur();
+        if (!addTriangle(this)) {
+            decrementerCompteur();
+            detruireFormeGlobale();
+            throw new IllegalStateException("Liste Triangle pleine (max=" + MAX_INSTANCES + ")");
+        }
         calculer();
         System.out.println("Creation d'un Triangle. Compteur Triangle : " + compteur +
                            ", total formes : " + Forme.getCompteurFormes());
@@ -29,6 +44,13 @@ public class TriangleQuelconque extends Forme {
 
     public static void incrementerCompteur() { compteur++; }
     public static void decrementerCompteur() { if (compteur>0) compteur--; }
+
+    // gestion instances
+    public static boolean isFullTriangle() { return instances.size() >= MAX_INSTANCES; }
+    public static boolean addTriangle(TriangleQuelconque t) { if (instances.size()>=MAX_INSTANCES) return false; instances.add(t); return true; }
+    public static TriangleQuelconque removeTriangleAt(int idx) { return instances.remove(idx); }
+    public static List<TriangleQuelconque> getTriangles() { return instances; }
+    public static int getTriangleCount() { return instances.size(); }
 
     private void calculer() {
         perimetre = a + b + c;

@@ -1,9 +1,14 @@
 // Auteur : Ahmed Boukra Bettayeb (adaptation)
 
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HexagoneIrregulier extends Forme {
     private static int compteur = 0;
+
+    private static final int MAX_INSTANCES = 10;
+    private static final List<HexagoneIrregulier> instances = new ArrayList<>();
 
     private double[][] sommets = new double[6][2];
     private double surface;
@@ -17,6 +22,11 @@ public class HexagoneIrregulier extends Forme {
             this.sommets[i][1] = sommets[i][1];
         }
         incrementerCompteur();
+        if (!addHexagone(this)) {
+            decrementerCompteur();
+            detruireFormeGlobale();
+            throw new IllegalStateException("Liste Hexagone pleine (max=" + MAX_INSTANCES + ")");
+        }
         calculerPerimetre();
         calculerSurface();
         System.out.println("Creation d'un Hexagone. Compteur Hexagone : " + compteur +
@@ -32,6 +42,11 @@ public class HexagoneIrregulier extends Forme {
             System.out.print("Sommet " + (i+1) + " y : "); this.sommets[i][1] = sc.nextDouble();
         }
         incrementerCompteur();
+        if (!addHexagone(this)) {
+            decrementerCompteur();
+            detruireFormeGlobale();
+            throw new IllegalStateException("Liste Hexagone pleine (max=" + MAX_INSTANCES + ")");
+        }
         calculerPerimetre();
         calculerSurface();
         System.out.println("Creation d'un Hexagone. Compteur Hexagone : " + compteur +
@@ -40,6 +55,13 @@ public class HexagoneIrregulier extends Forme {
 
     public static void incrementerCompteur() { compteur++; }
     public static void decrementerCompteur() { if (compteur>0) compteur--; }
+
+    // gestion instances
+    public static boolean isFullHexagone() { return instances.size() >= MAX_INSTANCES; }
+    public static boolean addHexagone(HexagoneIrregulier h) { if (instances.size()>=MAX_INSTANCES) return false; instances.add(h); return true; }
+    public static HexagoneIrregulier removeHexagoneAt(int idx) { return instances.remove(idx); }
+    public static List<HexagoneIrregulier> getHexagones() { return instances; }
+    public static int getHexagoneCount() { return instances.size(); }
 
     private void calculerPerimetre() {
         perimetre = 0.0;

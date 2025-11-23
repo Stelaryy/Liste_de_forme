@@ -1,9 +1,14 @@
 // Auteur : Ahmed Boukra Bettayeb (adaptation)
 
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Losange extends Forme {
     private static int compteur = 0;
+
+    private static final int MAX_INSTANCES = 10;
+    private static final List<Losange> instances = new ArrayList<>();
 
     private double d1, d2, cote, angleRad;
     private double surface, perimetre;
@@ -11,6 +16,11 @@ public class Losange extends Forme {
     public Losange() { // saisie côté + angle
         super();
         incrementerCompteur();
+        if (!addLosange(this)) {
+            decrementerCompteur();
+            detruireFormeGlobale();
+            throw new IllegalStateException("Liste Losange pleine (max=" + MAX_INSTANCES + ")");
+        }
         saisirDimensions();
         System.out.println("Creation d'un Losange. Compteur Losange : " + compteur +
                            ", total formes : " + Forme.getCompteurFormes());
@@ -19,6 +29,11 @@ public class Losange extends Forme {
     public Losange(boolean fromDiagonales) {
         super();
         incrementerCompteur();
+        if (!addLosange(this)) {
+            decrementerCompteur();
+            detruireFormeGlobale();
+            throw new IllegalStateException("Liste Losange pleine (max=" + MAX_INSTANCES + ")");
+        }
         if (fromDiagonales) {
             saisirDimensions(); // overload will request diagonales in this implementation too
         } else {
@@ -30,6 +45,13 @@ public class Losange extends Forme {
 
     public static void incrementerCompteur() { compteur++; }
     public static void decrementerCompteur() { if (compteur>0) compteur--; }
+
+    // gestion instances
+    public static boolean isFullLosange() { return instances.size() >= MAX_INSTANCES; }
+    public static boolean addLosange(Losange l) { if (instances.size()>=MAX_INSTANCES) return false; instances.add(l); return true; }
+    public static Losange removeLosangeAt(int idx) { return instances.remove(idx); }
+    public static List<Losange> getLosanges() { return instances; }
+    public static int getLosangeCount() { return instances.size(); }
 
     @Override
     public void saisirDimensions() {
