@@ -38,7 +38,7 @@ public class GestionFormes {
         }
         // libération
         for (Forme f : tableaux) {
-            if (f != null) f.dispose();
+            if (f != null) f.detruire();
         }
         sc.close();
     }
@@ -76,57 +76,52 @@ public class GestionFormes {
         try {
             switch (type) {
                 case "Rectangle":
-                    f = new Rectangle();
-                    f.saisirDimension(sc);
+                    System.out.print("Longueur = "); double L = sc.nextDouble();
+                    System.out.print("Largeur = "); double l = sc.nextDouble();
+                    f = new Rectangle(L, l);
                     break;
                 case "Carre":
-                    f = new Carre();
-                    f.saisirDimension(sc);
+                    System.out.print("Cote = "); double cote = sc.nextDouble();
+                    f = new Carre(cote);
                     break;
                 case "Ellipse":
-                    f = new ellipse();
-                    f.saisirDimension(sc);
+                    System.out.print("Grand axe = "); double ga = sc.nextDouble();
+                    System.out.print("Petit axe = "); double pa = sc.nextDouble();
+                    f = new ellipse(ga, pa);
                     break;
                 case "Cercle":
-                    f = new cercle();
-                    f.saisirDimension(sc);
+                    System.out.print("Rayon = "); double r = sc.nextDouble();
+                    f = new cercle(r);
                     break;
                 case "Losange":
-                    System.out.println("1: via diagonales, 2: via cote+angle, autre: cote+angle");
-                    int c = lireInt(sc);
+                    // Le constructeur de Losange gère la saisie interactive
                     f = new Losange();
-                    if (c == 1) {
-                        System.out.print("d1 = "); double d1 = sc.nextDouble();
-                        System.out.print("d2 = "); double d2 = sc.nextDouble();
-                        f.saisirDimension(sc, d1, d2);
-                    } else {
-                        f.saisirDimension(sc);
-                    }
                     break;
                 case "Triangle":
                     System.out.println("1: 3 cotes  2: 2 cotes + angle");
                     int t = lireInt(sc);
                     if (t == 1) {
+                        // constructeur sans argument demande les cotes
                         f = new TriangleQuelconque();
-                        f.saisirDimension(sc);
                     } else {
                         System.out.print("a = "); double a = sc.nextDouble();
                         System.out.print("b = "); double b = sc.nextDouble();
                         System.out.print("angle (deg) = "); double ang = sc.nextDouble();
-                        f = new TriangleQuelconque();
-                        f.saisirDimension(sc, a, b, ang);
+                        // calcul du 3e cote par loi du cosinus
+                        double c3 = Math.sqrt(Math.max(0.0, a*a + b*b - 2*a*b*Math.cos(Math.toRadians(ang))));
+                        f = new TriangleQuelconque(a, b, c3);
                     }
                     break;
                 case "Hexagone":
+                    // le constructeur interactif gère la saisie des sommets
                     f = new HexagoneIrregulier();
-                    f.saisirDimension(sc);
                     break;
                 default:
                     System.out.println("Type inconnu");
             }
         } catch (Exception ex) {
             System.out.println("Erreur lors de la creation/saisie : " + ex.getMessage());
-            if (f != null) f.dispose();
+            if (f != null) f.detruire();
             return;
         }
         if (f != null) {
@@ -141,7 +136,7 @@ public class GestionFormes {
         int idx = lireInt(sc);
         if (idx < 0 || idx >= tab.size()) { System.out.println("Indice invalide."); return; }
         Forme f = tab.get(idx);
-        f.dispose(); // décrémente compteurs
+        f.detruire(); // décrémente compteurs
         tab.remove(idx);
         System.out.println("Forme supprimee.");
     }

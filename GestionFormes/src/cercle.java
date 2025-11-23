@@ -1,15 +1,20 @@
 // Auteur : Ahmed Boukra Bettayeb (adaptation)
 
 public class cercle extends ellipse {
+    private static int compteurCercle = 0;
     private double rayon;
 
     public cercle(double rayon) {
-        super(rayon, rayon); // Ellipse constructor will increment global and ellipse compteur
+        super(rayon, rayon); // appelle Forme constructor; ellipse compteur suppressed for subclasses
         this.rayon = rayon;
-        System.out.println("Creation d'un Cercle, rayon = " + rayon);
+        // incrémente compteur propre au cercle
+        compteurCercle++;
+        System.out.println("Creation d'un Cercle. Compteur Cercle : " + compteurCercle + ", total formes : " + Forme.getCompteurFormes());
     }
 
     public cercle() { this(1.0); }
+
+    public static void decrementerCompteur() { if (compteurCercle>0) compteurCercle--; }
 
     @Override
     public double getSurface() {
@@ -23,10 +28,8 @@ public class cercle extends ellipse {
 
     @Override
     public void detruire() {
-        // Ellipse::decrementerCompteur doit déjà décrementer ellipse compteur.
-        // On appelera Ellipse.decrementerCompteur + forme global decrement
-        ellipse.decrementerCompteur();
+        decrementerCompteur();
         detruireFormeGlobale();
-        System.out.println("Suppression d'un Cercle. total formes : " + Forme.getCompteurFormes());
+        System.out.println("Suppression d'un Cercle. Restants Cercle : " + compteurCercle + ", total formes : " + Forme.getCompteurFormes());
     }
 }

@@ -14,11 +14,16 @@ public class Rectangle extends Forme {
 
     public Rectangle(double longueur, double largeur) {
         super(); // incrémente compteur global
-        incrementerCompteur();
+        // n'incrémente le compteur Rectangle que si l'instance est exactement Rectangle
+        if (this.getClass() == Rectangle.class) {
+            incrementerCompteur();
+        }
         setLongueur(longueur);
         setLargeur(largeur);
-        System.out.println("Creation d'un Rectangle. Compteur Rectangle : " + compteur +
+        if (this.getClass() == Rectangle.class) {
+            System.out.println("Creation d'un " + this.getClass().getSimpleName() + ". Compteur Rectangle : " + compteur +
                            ", total formes : " + Forme.getCompteurFormes());
+        }
     }
 
     public Rectangle() {

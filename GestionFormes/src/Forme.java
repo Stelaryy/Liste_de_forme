@@ -44,5 +44,11 @@ public abstract class Forme {
     public String toString() {
         return this.getClass().getSimpleName();
     }
+    // Méthode par défaut pour détruire la forme :
+    // les sous-classes peuvent surcharger pour décrémenter
+    // leur propre compteur puis appeler super.detruire().
+    public void detruire() {
+        detruireFormeGlobale();
+    }
 }
 

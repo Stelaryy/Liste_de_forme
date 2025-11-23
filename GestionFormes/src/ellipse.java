@@ -15,11 +15,16 @@ public class ellipse extends Forme {
         if (grandAxe <= 0 || petitAxe <= 0) throw new IllegalArgumentException("Axes>0");
         this.grandAxe = grandAxe;
         this.petitAxe = petitAxe;
-        incrementerCompteur();
+        // n'incrémente le compteur Ellipse que si l'instance est exactement ellipse
+        if (this.getClass() == ellipse.class) {
+            incrementerCompteur();
+        }
         calculerSurface();
         calculerPerimetre();
-        System.out.println("Creation d'une Ellipse. Compteur Ellipse : " + compteur +
+        if (this.getClass() == ellipse.class) {
+            System.out.println("Creation d'une " + this.getClass().getSimpleName() + ". Compteur Ellipse : " + compteur +
                            ", total formes : " + Forme.getCompteurFormes());
+        }
     }
 
     public ellipse() { this(1.0, 1.0); }
