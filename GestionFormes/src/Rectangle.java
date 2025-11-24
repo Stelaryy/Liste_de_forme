@@ -2,9 +2,9 @@
 // Version : 1.0
 // Rectangle hérite de Forme
 
-import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Rectangle extends Forme {
     private static int compteur = 0;

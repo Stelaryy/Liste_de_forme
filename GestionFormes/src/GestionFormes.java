@@ -3,8 +3,6 @@
 // Version: 1.0
 // Date : 2025-11-xx
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class GestionFormes {

@@ -1,8 +1,8 @@
 // Auteur : Ahmed Boukra Bettayeb (adaptation)
 
-import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Losange extends Forme {
     private static int compteur = 0;

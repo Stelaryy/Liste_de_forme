@@ -1,9 +1,9 @@
 // Auteur : Ahmed Boukra Bettayeb (adaptation)
 // Carre extends Rectangle
 
-import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Carre extends Rectangle {
     private static int compteurCarre = 0;
