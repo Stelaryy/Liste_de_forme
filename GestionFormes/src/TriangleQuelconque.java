@@ -1,4 +1,6 @@
-// Auteur : Ahmed Boukra Bettayeb (adaptation)
+// Auteur : Ahmed Boukra Bettayeb
+// Class TriangleQuelconque
+// date : 2025-11-25
 
 import java.util.ArrayList;
 import java.util.List;

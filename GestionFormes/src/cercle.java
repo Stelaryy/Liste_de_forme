@@ -1,4 +1,6 @@
-// Auteur : Ahmed Boukra Bettayeb (adaptation)
+// Auteur : Ahmed Boukra Bettayeb
+// Class Cercle
+// date : 2025-11-25
 
 public class cercle extends ellipse {
     private static int compteurCercle = 0;

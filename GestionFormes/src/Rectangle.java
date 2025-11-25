@@ -1,6 +1,6 @@
-// Auteur : Ahmed Boukra Bettayeb (adaptation)
-// Version : 1.0
-// Rectangle hérite de Forme
+// Auteur : Ahmed Boukra Bettayeb
+// Class Rectangle
+// date : 2025-11-25
 
 import java.util.ArrayList;
 import java.util.List;

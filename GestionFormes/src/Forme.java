@@ -1,6 +1,6 @@
-// Auteur : Ahmed Boukra Bettayeb (adaptation)
-// Version : 1.0
-// Date : 2025-11-18
+// Auteur : Ahmed Boukra Bettayeb 
+// Version : 2.0
+// Date : 2025-11-25
 // Classe abstraite Forme : compteur global + contrat pour les formes
 
 public abstract class Forme {

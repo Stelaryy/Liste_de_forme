@@ -1,5 +1,6 @@
-// Auteur : Ahmed Boukra Bettayeb (adaptation)
-// Carre extends Rectangle
+// Auteur : Ahmed Boukra Bettayeb
+// Class Carre
+// date : 2025-11-25
 
 import java.util.ArrayList;
 import java.util.List;

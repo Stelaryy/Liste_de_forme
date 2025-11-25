@@ -1,18 +1,16 @@
 // Auteur : Ahmed Boukra Bettayeb
-// GestionFormes - Menu principal (option B demandée)
-// Version: 1.0
-// Date : 2025-11-xx
+// Class GestionFormes
+// date : 2025-11-25
 
 import java.util.Scanner;
 
 public class GestionFormes {
     private static final int TAILLE_MAX = 100;
     private static final int TAILLE_PAR_TYPE = 10;
-    // Les listes sont gérées par chaque classe (chaque classe possède sa liste statique de taille 10)
-
+    
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        // Les listes par type sont gérées statiquement dans chaque classe (instances limitées à 10)
+       
         int choix = -1;
 
         while (choix != 0) {
@@ -32,13 +30,8 @@ public class GestionFormes {
                 case 0: System.out.println("Au revoir."); break;
                 default: System.out.println("Choix invalide."); break;
             }
-            // vérification globale non nécessaire ; contrôle par-type lors de l'ajout
             
         }
-        // libération : détruire toutes les formes des listes gérées par les classes
-        // Prendre un snapshot puis appeler detruire() — évite ConcurrentModification
-            // Pas de destruction explicite ici : les classes gardent leurs instances statiques;
-            // le processus se termine et le GC libérera la mémoire. Fermer le scanner.
             sc.close();
     }
 
